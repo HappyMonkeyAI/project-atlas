@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-17",
+  "policy": {
+    "mode": "read-only",
+    "hosts": ["local"],
+    "notes": "Reviewed allowlist only. Inventory reads Git metadata and never reads note bodies, logs, environment files, or credentials. Add private hosts/paths in gitignored data/project-inventory.local.json."
+  },
+  "sources": []
+}

@@ -1,0 +1,49 @@
+# Dependencies / build
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Secrets and local env (keep *.example tracked)
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+*credentials*.json
+*secret*
+MCP.local.md
+
+# Atlas private / local agent state
+.agent/memories/private/
+.agent/memories/history/
+.agent/design/cache/
+*.local.json
+*.local.md
+graph.local.js
+STATUS.local.md
+PROGRESS.local.md
+frontend/atlas-spatial/src/data/atlas.local.ts
+data/private/
+data/project-inventory.local.json
+
+# OS / editor junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/*.log
+
+# Large dumps / backups (never commit)
+*.sql
+*.sqlite
+*.dump
+*.bak
+*.zip
+*.7z
+*.tar
+*.tar.gz

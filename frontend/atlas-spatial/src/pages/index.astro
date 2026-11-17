@@ -1,0 +1,83 @@
+---
+import { atlasNodes, atlasEdges } from '../data/atlas'
+import '../styles/atlas.css'
+---
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><title>Project Atlas — Spatial prototype</title><meta name="description" content="A spatial prototype for the Project Atlas roadmap intelligence workspace." /></head>
+<body>
+<header class="atlas-header"><a class="brand" href="/"><span class="brand-mark"><span>A</span></span><span><strong>Project Atlas</strong><small>Spatial frontend prototype</small></span></a><div class="header-meta"><span id="graph-status">Graph fallback</span><span id="graph-count">7 nodes</span><span>2D graph</span></div></header>
+<main class="workspace"><section><div class="intro"><span class="eyebrow">Atlas / constellation</span><h1>See what your work unlocks.</h1><p>This prototype keeps the graph readable and connected while the next view remains grounded in evidence and build paths.</p></div>
+<nav class="view-tabs" aria-label="Project map views"><button data-view="constellation" aria-current="page">Constellation</button><button data-view="radial">Radial</button><button data-view="tree">Tree</button><button data-view="hex">Hex</button></nav>
+<div class="scene-stage view-surface" data-view-surface="constellation"><div class="scene-toolbar"><span><strong>Constellation</strong><small>Connected work, capabilities, and ideas</small></span><span class="map-key"><i class="key-dot accepted"></i>Accepted <i class="key-dot suggested"></i>Suggested</span></div><svg class="graph-edges" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g id="edge-layer"></g></svg><div class="node-list" data-nodes={JSON.stringify(atlasNodes)} data-edges={JSON.stringify(atlasEdges)}>{atlasNodes.map((node) => <button class="node-card" data-node={node.id} data-status={node.status} style={'--node-color:' + node.color + ';left:' + (50 + node.x * 6.8) + '%;top:' + (50 - node.y * 8.8) + '%'}><strong>{node.title}</strong><small>{node.summary}</small></button>)}</div><div class="scene-caption">Select a node to trace its evidence and relationships.</div></div>
+<div class="view-surface map-panel" data-view-surface="radial" hidden><div class="radial-map"><div class="radial-core">MY<br />PORTFOLIO</div><div class="radial-ring radial-ring-one"><span>Core tools</span><span>Active work</span><span>Learning</span><span>Future ideas</span></div><div class="radial-ring radial-ring-two">{atlasNodes.filter((node) => node.id !== 'atlas').map((node) => <button data-node={node.id}>{node.title}</button>)}</div></div><p class="surface-note">Radial answers: where is my attention and capability concentrated?</p></div>
+<div class="view-surface map-panel" data-view-surface="tree" hidden><div class="tree-map"><div><span class="eyebrow">Sources</span>{atlasNodes.filter((node) => node.kind === 'source').map((node) => <button data-node={node.id}><strong>{node.title}</strong><small>{node.summary}</small></button>)}</div><div><span class="eyebrow">Capabilities</span>{atlasNodes.filter((node) => node.kind === 'capability').map((node) => <button data-node={node.id}><strong>{node.title}</strong><small>{node.summary}</small></button>)}</div><div><span class="eyebrow">Future builds</span>{atlasNodes.filter((node) => node.kind === 'idea').map((node) => <button data-node={node.id}><strong>{node.title}</strong><small>{node.summary}</small></button>)}</div></div><p class="surface-note">Tree answers: what must exist before this idea can move?</p></div>
+<div class="view-surface map-panel" data-view-surface="hex" hidden><div class="hex-map"><div class="hex-intro"><span class="eyebrow">Research board</span><h2>Unlock your next capability</h2><p>Sequence focused research and build steps.</p></div><div class="hex-grid">{atlasNodes.map((node) => <button data-node={node.id} class={'hex-card ' + (node.status === 'complete' ? 'complete' : node.status === 'future' ? 'locked' : 'active')}><strong>{node.title}</strong><small>{node.status}</small></button>)}</div></div><p class="surface-note">Hex answers: which focused capability should be built next?</p></div><div class="fallback-list"><h2>Graph nodes</h2><ul>{atlasNodes.map((node) => <li>{node.title} — {node.summary}</li>)}</ul></div></section>
+<aside class="inspector" aria-live="polite"><span class="eyebrow">Selected node</span><h2 id="selected-title">Project Atlas</h2><span class="status" id="selected-status">Active project</span><p id="selected-summary">Roadmap intelligence workspace</p><div class="progress-track" aria-label="Selected node progress"><span id="selected-progress"></span></div><div id="selected-evidence" class="selected-evidence"><strong>Evidence loading</strong><small>Sources and relationships will appear here.</small></div><hr /><span class="eyebrow">What it unlocks</span><div class="unlock"><div><strong>Repository graph</strong><small>Understand what already exists.</small></div><div><strong>Idea scoring</strong><small>Surface high-leverage next steps.</small></div><div><strong>Build paths</strong><small>See the shortest route to a goal.</small></div></div></aside></main>
+<script>
+const nodeList = document.querySelector<HTMLElement>('.node-list')
+type LiveNode = { id: string; title: string; kind?: string; color?: string; summary?: string; description?: string; status: string; displayStatus?: string; meta?: string; sources?: string[]; confidence?: number; progress?: number }
+let nodes: LiveNode[] = JSON.parse(nodeList?.dataset.nodes || '[]')
+let graphEdges: Array<{ from: string; to: string; kind?: string; confidence?: number; review?: string }> = JSON.parse(nodeList?.dataset.edges || '[]').map((edge: [string, string]) => ({ from: edge[0], to: edge[1], kind: 'enables', review: 'accepted' }))
+let graphSources: Array<{ id: string; label: string }> = []
+const edgeLayer = document.getElementById('edge-layer')
+const sourceById = () => new Map(graphSources.map((source) => [source.id, source.label]))
+const renderConstellationNodes = () => {
+  if (!nodeList) return
+  nodeList.innerHTML = nodes.map((node) => '<button class="node-card" data-node="' + node.id + '" data-status="' + node.status + '" style="--node-color:' + (node.color || '#28d7ea') + '"><strong>' + node.title + '</strong><small>' + (node.summary || node.description || '') + '</small></button>').join('')
+}
+const positionFor = (node: LiveNode) => {
+  if (node.id === 'atlas') return { x: 50, y: 50 }
+  const kind = (node as LiveNode & { kind?: string }).kind || 'project'
+  const groups: Record<string, number> = { source: 18, project: 38, capability: 60, idea: 82 }
+  const siblings = nodes.filter((candidate) => candidate.id !== 'atlas' && ((candidate as LiveNode & { kind?: string }).kind || 'project') === kind)
+  const row = Math.max(0, siblings.findIndex((candidate) => candidate.id === node.id))
+  return { x: groups[kind] || 50, y: 22 + (row * (56 / Math.max(1, siblings.length - 1))) }
+}
+const applyPositions = () => {
+  const positions = new Map(nodes.map((node) => [node.id, positionFor(node)]))
+  document.querySelectorAll<HTMLButtonElement>('.node-card').forEach((button) => {
+    const position = positions.get(button.dataset.node || '')
+    if (position) { button.style.left = position.x + '%'; button.style.top = position.y + '%' }
+  })
+  if (edgeLayer) edgeLayer.innerHTML = graphEdges.map((edge) => {
+    const from = positions.get(edge.from); const to = positions.get(edge.to)
+    if (!from || !to) return ''
+    return '<line class="edge-line ' + (edge.review === 'suggested' ? 'suggested' : 'accepted') + '" x1="' + from.x + '" y1="' + from.y + '" x2="' + to.x + '" y2="' + to.y + '" />'
+  }).join('')
+}
+const selectNode = (nodeId: string) => {
+  const node = nodes.find((item) => item.id === nodeId)
+  if (!node) return
+  document.getElementById('selected-title')!.textContent = node.title
+  document.getElementById('selected-summary')!.textContent = node.description || node.summary || ''
+  document.getElementById('selected-status')!.textContent = node.meta || (node.status === 'idea' ? 'Future idea' : node.status)
+  const progress = document.getElementById('selected-progress')
+  if (progress) progress.style.width = Math.max(0, Math.min(100, node.progress || 0)) + '%'
+  const labels = sourceById()
+  const evidence = document.getElementById('selected-evidence')
+  const related = graphEdges.filter((edge) => edge.from === node.id || edge.to === node.id).map((edge) => edge.from === node.id ? edge.to : edge.from)
+  if (evidence) evidence.innerHTML = '<strong>' + (node.sources?.length || 0) + ' sources · ' + Math.round((node.confidence || 0) * 100) + '% confidence</strong><small>' + ((node.sources || []).map((source) => labels.get(source) || source).join(' · ') || 'No provenance attached') + '</small><small>' + related.length + ' connected relationships</small>'
+}
+document.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((tab) => tab.addEventListener('click', () => {
+  document.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((item) => item.toggleAttribute('aria-current', item === tab))
+  document.querySelectorAll<HTMLElement>('[data-view-surface]').forEach((surface) => { surface.hidden = surface.dataset.viewSurface !== tab.dataset.view })
+}))
+nodeList?.addEventListener('click', (event) => { const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-node]'); if (button) selectNode(button.dataset.node || '') })
+document.querySelectorAll<HTMLButtonElement>('[data-node]:not(.node-card)').forEach((button) => button.addEventListener('click', () => selectNode(button.dataset.node || '')))
+applyPositions()
+const graphResponse = await fetch('/api/graph').catch(() => null)
+if (graphResponse?.ok) {
+  const graph = await graphResponse.json()
+  if (Array.isArray(graph.nodes)) {
+    nodes = graph.nodes
+    graphEdges = Array.isArray(graph.edges) ? graph.edges : graphEdges
+    graphSources = Array.isArray(graph.sources) ? graph.sources : []
+    const status = document.getElementById('graph-status')
+    if (status) status.textContent = 'Live graph · ' + graph.nodes.length + ' nodes'
+    const count = document.getElementById('graph-count')
+    if (count) count.textContent = graph.nodes.length + ' nodes · ' + graph.edges.length + ' links'
+    renderConstellationNodes()
+    applyPositions()
+    selectNode('atlas')
+  }
+}</script>
+</body></html>

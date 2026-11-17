@@ -1,0 +1,46 @@
+{
+  "exportedAt": "2026-10-27T12:00:00.000Z",
+  "module": "synthetic-m12-rehearsal",
+  "preferences": { "theme": "must-not-appear-in-atlas" },
+  "tasks": [
+    {
+      "id": "synth-atlas-plan",
+      "title": "Synthetic Atlas planning step",
+      "description": "PRIVATE_DESC_DO_NOT_PERSIST",
+      "notes": "PRIVATE_NOTES_DO_NOT_PERSIST",
+      "status": "in-progress",
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "updatedAt": "2026-10-27T11:00:00.000Z",
+      "subtasks": [
+        {
+          "id": "synth-atlas-plan-1",
+          "title": "Private subtask",
+          "description": "PRIVATE_SUB_DESC",
+          "complete": true,
+          "createdAt": "2026-10-02T00:00:00.000Z",
+          "updatedAt": "2026-10-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "synth-queue-conflict",
+      "title": "Synthetic status conflict task",
+      "description": "",
+      "notes": "",
+      "status": "pending",
+      "createdAt": "2026-10-05T00:00:00.000Z",
+      "updatedAt": "2026-10-20T12:00:00.000Z",
+      "subtasks": []
+    },
+    {
+      "id": "synth-done",
+      "title": "Synthetic completed task",
+      "description": "",
+      "notes": "",
+      "status": "completed",
+      "createdAt": "2026-10-06T00:00:00.000Z",
+      "updatedAt": "2026-10-22T12:00:00.000Z",
+      "subtasks": []
+    }
+  ]
+}

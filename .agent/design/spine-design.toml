@@ -1,0 +1,29 @@
+# Spine Design — Project Atlas (Roadmap)
+# Dev server: npm start / node server.mjs → http://localhost:4173
+
+adapter = "playwright"
+browser_channel = "chrome"
+base_url = "http://127.0.0.1:4173"
+wait_for = ".app-shell"
+theme_attr = ""
+pixels = true
+
+[components]
+app-shell = ".app-shell"
+sidebar = ".sidebar"
+main-stage = ".stage"
+inspector = ".inspector"
+candidates-nav = "[data-graph-section='candidates']"
+constellation = ".panel.constellation"
+
+[states.candidates]
+steps = [
+  { click = "[data-graph-section='candidates']" },
+  { wait_for = "#graphSectionView" },
+]
+
+[states.hex]
+steps = [
+  { click = "[data-view='hex']" },
+  { wait_for = ".panel.hex" },
+]

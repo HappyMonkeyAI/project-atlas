@@ -1,0 +1,15 @@
+---
+description: Before planning, consult kb_vault ecosystem page, Neo4j Codex, and Atlas candidate dispositions
+alwaysApply: true
+---
+
+# Ecosystem planning preflight
+
+Before finalizing architecture or a multi-step build plan in this workspace:
+
+1. **Wiki first for decisions/ops** — Read or search `Documents/development/kb_vault/concepts/research-knowledge-ecosystem.md` (and linked disposition pages). Prefer that pipeline over inventing a parallel stack.
+2. **Neo4j for library/API facts** — Call `search_knowledge_graph` (Neo4j semantic search MCP) when the plan depends on framework or docs patterns. Codex evidence overrides generic model recall for those facts.
+3. **Atlas candidates** — Treat `kind: candidate` nodes as gated leads. Honor `disposition`: `benchmark` / `pattern` / `reject` / `adopt`. Do not promote bookmark or hackathon projects to new repos without an explicit disposition change.
+4. **Ratchet** — After a successful slice, record one durable fact in the right layer (project LTM, then wiki if cross-project; Codex only for technical patterns).
+
+Do not auto-wire social-research / X bookmark tools into production mutation paths.

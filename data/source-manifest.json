@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-09",
+  "sources": [
+    {
+      "id": "taskmaster-repo",
+      "kind": "github-repository",
+      "label": "TaskMaster / VueJS-Todo",
+      "url": "https://github.com/HappyMonkeyAI/VueJS-Todo",
+      "enabled": true,
+      "access": "read-only",
+      "include": ["README.md", "AGENTS.md", "package.json", "recent-commits"],
+      "notes": "Existing todo, goals, notes, AI subtask, persistence, and GitHub-analysis patterns.",
+      "offlineSnapshot": {
+        "repository": { "name": "VueJS-Todo", "description": "Premium Vue todo application with nested tasks, goals, notes, AI automation, and GitHub analysis.", "default_branch": "master", "stargazers_count": 1, "forks_count": 1, "language": "JavaScript", "updated_at": "2026-02-26T00:00:00Z", "html_url": "https://github.com/HappyMonkeyAI/VueJS-Todo" },
+        "readme": "TaskMaster provides enhanced task editing, nested subtasks, detailed notes, localStorage persistence, AI subtask generation, GitHub integration, and drag-and-drop ordering.",
+        "packageJson": "{\"name\":\"taskmaster\",\"description\":\"Vue todo application\"}",
+        "agents": "Premium aesthetics, user-centric features, clean Vue implementation, and agent-assisted development.",
+        "commits": []
+      }
+    },
+    {
+      "id": "vibes-repo",
+      "kind": "github-repository",
+      "label": "Vibes Dashboard",
+      "url": "https://github.com/HappyMonkeyAI/vibes-dashboard",
+      "enabled": true,
+      "access": "read-only",
+      "include": ["README.md", "package.json", "public/", "modules/", "recent-commits"],
+      "notes": "Existing modular dashboard shell, design system, Three.js background, and module-loader patterns.",
+      "offlineSnapshot": {
+        "repository": { "name": "vibes-dashboard", "description": "Premium glassmorphic dashboard for orchestrating Vibes subagents.", "default_branch": "main", "stargazers_count": 2, "forks_count": 1, "language": "JavaScript", "updated_at": "2026-07-14T00:00:00Z", "html_url": "https://github.com/HappyMonkeyAI/vibes-dashboard" },
+        "readme": "Vibes Dashboard includes real-time agent monitoring, reactive Three.js/WebGL backgrounds, an integrated music player, voice control, and drop-in modules.",
+        "packageJson": "{\"name\":\"glass-vibes-dashboard\",\"description\":\"Premium glassmorphic dashboard\",\"dependencies\":{\"three\":\"^0.184.0\"}}",
+        "agents": "Use the design system, preserve module boundaries, and verify behavior through the documented harness.",
+        "commits": []
+      }
+    },
+    {
+      "id": "agents-protocol-repo",
+      "kind": "github-repository",
+      "label": "AgentsProtocol",
+      "url": "https://github.com/HappyMonkeyAI/AgentsProtocol",
+      "enabled": true,
+      "access": "read-only",
+      "include": ["README.md", "AGENTS.md", "CONTEXT.md", "BOOTSTRAP.md", "docs/", "skills/"],
+      "notes": "Development protocol, documentation spine, MCP routing, and verification-ladder patterns for agent-assisted work.",
+      "offlineSnapshot": {
+        "repository": { "name": "AgentsProtocol", "description": "A high-velocity development framework for AI agents.", "default_branch": "main", "stargazers_count": 0, "forks_count": 0, "language": "Markdown", "updated_at": "2026-09-09T00:00:00Z", "html_url": "https://github.com/HappyMonkeyAI/AgentsProtocol" },
+        "readme": "Agents Protocol defines context files, architecture patterns, MCP routing, long-term memory, pre-flight pre-mortems, and a verification ladder for AI-assisted development.",
+        "packageJson": "",
+        "agents": "Use AGENTS.md, CONTEXT.md, and the verification ladder as grounding and evidence boundaries.",
+        "commits": []
+      }
+    },
+    {
+      "id": "vault-source",
+      "kind": "local-vault",
+      "label": "Local knowledge vault",
+      "path": null,
+      "enabled": false,
+      "access": "metadata-only",
+      "include": ["filenames", "folders", "headings", "modified-dates", "explicit-tags"],
+      "notes": "Path must be confirmed before indexing. Note bodies remain local and are excluded from logs and exports."
+    }
+  ]
+}

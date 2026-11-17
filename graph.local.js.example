@@ -1,0 +1,11 @@
+/* Copy to graph.local.js (gitignored) to keep a private Atlas seed on this machine.
+   The committed graph.js ships a scrubbed demo seed for public clones.
+   Format: assign globalThis.__atlasLocalSeed to a full { version, generatedAt, nodes, edges, sources } graph.
+*/
+globalThis.__atlasLocalSeed = {
+  version: 1,
+  generatedAt: 'YYYY-MM-DD',
+  nodes: [],
+  edges: [],
+  sources: []
+};
